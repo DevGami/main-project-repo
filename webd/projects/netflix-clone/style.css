@@ -1,0 +1,613 @@
+@import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@600&family=Poppins:wght@300;400;500;700&display=swap');
+
+:root {
+    --netflix-red: #e50914;
+    --netflix-red-hover: #c11119;
+    --dark-bg: #000000;
+    --divider-color: #232323;
+    --text-light: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --input-bg: rgba(22, 22, 22, 0.7);
+    --faq-bg: #2d2d2d;
+    --faq-hover: #414141;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* =========================
+   UTILITIES
+   ========================= */
+.divider {
+    height: 8px;
+    background-color: var(--divider-color);
+    width: 100%;
+}
+
+.btn {
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* =========================
+   HERO SECTION
+   ========================= */
+.hero-wrapper {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 8px solid var(--divider-color);
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('assets/images/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.hero-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 2;
+}
+
+/* NAVBAR */
+.navbar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 5%;
+    max-width: 1920px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.logo {
+    width: 148px;
+    height: 40px;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.lang-select {
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-signin {
+    background-color: var(--netflix-red);
+    color: white;
+    padding: 6px 16px;
+    font-size: 14px;
+}
+
+.btn-signin:hover {
+    background-color: var(--netflix-red-hover);
+}
+
+/* HERO CONTENT */
+.hero-content {
+    position: relative;
+    z-index: 10;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 5%;
+    max-width: 950px;
+    margin: 0 auto;
+    gap: 16px;
+}
+
+.hero-title {
+    font-family: 'Martel Sans', sans-serif;
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1.1;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-top: 8px;
+}
+
+.hero-cta-text {
+    font-size: 1.25rem;
+    margin-top: 12px;
+}
+
+.hero-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    width: 100%;
+    max-width: 600px;
+    height: 56px;
+}
+
+.input-group {
+    position: relative;
+    flex-grow: 1;
+    height: 100%;
+}
+
+.input-group input {
+    width: 100%;
+    height: 100%;
+    padding: 24px 16px 8px;
+    background: var(--input-bg);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+    border-color: white;
+}
+
+.input-group label {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    transition: all 0.2s ease-out;
+    pointer-events: none;
+    font-size: 1rem;
+}
+
+/* Floating Label Logic */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.btn-get-started {
+    background-color: var(--netflix-red);
+    color: white;
+    font-size: 1.5rem;
+    padding: 0 24px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-get-started:hover {
+    background-color: var(--netflix-red-hover);
+}
+
+/* =========================
+   FEATURE SECTIONS
+   ========================= */
+.feature-section {
+    padding: 72px 5%;
+}
+
+.feature-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.feature-section.reversed .feature-container {
+    flex-direction: row-reverse;
+}
+
+.feature-text {
+    flex: 1;
+}
+
+.feature-text h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 16px;
+}
+
+.feature-text p {
+    font-size: 1.5rem;
+}
+
+.feature-media {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* TV Video Masking */
+.tv-wrapper {
+    position: relative;
+    max-width: 530px;
+    width: 100%;
+}
+
+.tv-wrapper img {
+    position: relative;
+    width: 100%;
+    z-index: 2;
+}
+
+.tv-video-container {
+    position: absolute;
+    top: 20.5%;
+    left: 13%;
+    width: 73.5%;
+    height: 54%;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.tv-video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Devices Video Masking */
+.device-wrapper {
+    position: relative;
+    max-width: 530px;
+    width: 100%;
+}
+
+.device-wrapper img {
+    position: relative;
+    width: 100%;
+    z-index: 2;
+}
+
+.device-video-container {
+    position: absolute;
+    top: 10%;
+    left: 19%;
+    width: 61%;
+    height: 47%;
+    z-index: 1;
+}
+
+.device-video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mobile Download Card */
+.mobile-wrapper {
+    position: relative;
+    max-width: 530px;
+    width: 100%;
+}
+
+.mobile-wrapper > img {
+    width: 100%;
+}
+
+.download-card {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    min-width: 280px;
+    background: black;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    box-shadow: 0 0 2em 0 black;
+    z-index: 3;
+}
+
+.download-card .poster {
+    height: 72px;
+    margin-right: 16px;
+}
+
+.download-text {
+    flex-grow: 1;
+}
+
+.download-text .title {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.download-text .status {
+    color: #0071eb;
+    font-size: 0.875rem;
+}
+
+.download-card .icon {
+    height: 48px;
+}
+
+/* =========================
+   FAQ SECTION (CSS ONLY)
+   ========================= */
+.faq-section {
+    padding: 72px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.faq-section h2 {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 32px;
+}
+
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 48px;
+}
+
+.faq-item {
+    background: var(--faq-bg);
+    position: relative;
+}
+
+.faq-toggle {
+    display: none; /* Hide the checkbox */
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.faq-question:hover {
+    background: var(--faq-hover);
+}
+
+.icon-plus {
+    transition: transform 0.3s ease;
+}
+
+/* The magic of the Checkbox Hack */
+.faq-toggle:checked + .faq-question .icon-plus {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.5, 0, 0.1, 1), padding 0.4s ease;
+    background: var(--faq-bg);
+    border-top: 1px solid black;
+    padding: 0 24px;
+    font-size: 1.5rem;
+}
+
+.faq-answer p {
+    margin: 24px 0;
+}
+
+.faq-toggle:checked ~ .faq-answer {
+    max-height: 1200px; /* Arbitrary large height */
+}
+
+.faq-cta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.faq-cta p {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+footer {
+    padding: 72px 5%;
+    color: var(--text-muted);
+}
+
+.footer-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.questions-call {
+    margin-bottom: 32px;
+    font-size: 1rem;
+}
+
+.questions-call a {
+    color: var(--text-muted);
+    text-decoration: underline;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    list-style: none;
+    margin-bottom: 32px;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    text-decoration: underline;
+}
+
+.footer-lang {
+    margin-bottom: 24px;
+}
+
+.footer-country {
+    font-size: 0.875rem;
+}
+
+/* =========================
+   MEDIA QUERIES
+   ========================= */
+@media (max-width: 1024px) {
+    .feature-container,
+    .feature-section.reversed .feature-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .feature-text h2 {
+        font-size: 2.5rem;
+    }
+
+    .feature-media {
+        width: 100%;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .faq-section h2 {
+        font-size: 2.5rem;
+    }
+
+    .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 16px 5%;
+    }
+    
+    .logo {
+        width: 89px;
+        height: 24px;
+    }
+    
+    .btn-signin {
+        padding: 4px 12px;
+    }
+
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.125rem;
+    }
+    
+    .hero-cta-text {
+        font-size: 1.125rem;
+    }
+
+    .hero-form {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        gap: 16px;
+    }
+
+    .input-group,
+    .btn-get-started {
+        height: 56px;
+        width: 100%;
+    }
+
+    .btn-get-started {
+        font-size: 1.125rem;
+    }
+
+    .feature-section {
+        padding: 48px 5%;
+    }
+
+    .feature-text h2 {
+        font-size: 1.75rem;
+    }
+
+    .feature-text p {
+        font-size: 1.125rem;
+    }
+
+    .faq-section h2 {
+        font-size: 1.75rem;
+    }
+
+    .faq-question, .faq-answer {
+        font-size: 1.125rem;
+    }
+
+    .download-card {
+        min-width: 240px;
+    }
+    
+    .download-card .poster {
+        height: 48px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-links {
+        grid-template-columns: 1fr;
+    }
+}

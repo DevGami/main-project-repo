@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=DM+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Spotify — Music for Everyone</title>
+</head>
+
+<body>
+
+    <!-- Toast Notification Area -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="app-container">
+
+        <!-- ══════════════ LEFT SIDEBAR ══════════════ -->
+        <aside class="sidebar" id="sidebar">
+            <button class="sidebar-close-btn" id="sidebarClose">
+                <img src="img/close.svg" alt="close" width="16">
+            </button>
+
+            <!-- NAV SECTION -->
+
+            <div class="sidebar-section nav-section">
+                <div class="logo">
+                    <img src="img/logo.svg" alt="Spotify" width="118">
+                </div>
+                <nav class="nav-links">
+                    <a href="#" class="nav-item active" id="homeNav">
+                        <img src="img/home.svg" alt="">
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="nav-item" id="searchNavItem">
+                        <img src="img/search.svg" alt="">
+                        <span>Search</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- LIBRARY SECTION -->
+            <div class="sidebar-section library-section">
+                <div class="library-header">
+                    <div class="library-title">
+                        <img src="img/playlist.svg" alt="">
+                        <h2>Your Library</h2>
+                    </div>
+                    <div class="library-count" id="libraryCount">0 songs</div>
+                </div>
+
+                <!-- Search within song list -->
+                <div class="library-search">
+                    <img src="img/search.svg" alt="" width="14">
+                    <input type="text" id="songSearchInput" placeholder="Search in playlist…">
+                </div>
+
+                <div class="song-list-container">
+                    <ul class="song-list" id="songList"></ul>
+                </div>
+
+                <footer class="sidebar-footer">
+                    <a href="https://www.spotify.com/legal/">Legal</a>
+                    <a href="https://www.spotify.com/privacy/">Privacy</a>
+                    <a href="https://www.spotify.com/legal/cookies-policy/">Cookies</a>
+                    <a href="https://www.spotify.com/accessibility/">Accessibility</a>
+                </footer>
+            </div>
+        </aside>
+
+        <!-- ══════════════ MAIN CONTENT ══════════════ -->
+        <main class="main-content" id="mainContent">
+
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="hamburger-btn" id="hamburgerBtn">
+                        <img src="img/hamburger.svg" alt="menu" width="22">
+                    </button>
+                    <div class="nav-arrows">
+                        <button class="arrow-btn" title="Go back">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M15 6L9.707 11.293C9.374 11.626 9.207 11.793 9.207 12C9.207 12.207 9.374 12.374 9.707 12.707L15 18"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                        <button class="arrow-btn" title="Go forward">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M9 18L14.293 12.707C14.626 12.374 14.793 12.207 14.793 12C14.793 11.793 14.626 11.626 14.293 11.293L9 6"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="top-search-bar" id="topSearchBar">
+                        <img src="img/search.svg" alt="" width="16">
+                        <input type="text" id="globalSearchInput" placeholder="What do you want to listen to?">
+                        <button class="search-clear" id="searchClear" style="display:none">✕</button>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <button class="btn-text">Sign up</button>
+                    <button class="btn-pill">Log in</button>
+                </div>
+            </header>
+
+            <!-- Greeting Banner -->
+            <div class="greeting-banner" id="greetingBanner">
+                <div class="greeting-text">
+                    <span id="greetingMsg">Good evening</span> 👋
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <section class="content-area" id="contentArea">
+                <div class="section-header">
+                    <h1 id="sectionTitle">Featured Playlists</h1>
+                    <span class="see-all" id="seeAllBtn" style="display:none">Back to all</span>
+                </div>
+
+                <!-- Album Cards Grid -->
+                <div class="card-grid" id="cardGrid">
+                    <!-- Skeleton loaders -->
+                    <div class="card skeleton"></div>
+                    <div class="card skeleton"></div>
+                    <div class="card skeleton"></div>
+                    <div class="card skeleton"></div>
+                    <div class="card skeleton"></div>
+                    <div class="card skeleton"></div>
+                </div>
+
+                <!-- No results message -->
+                <div class="no-results hidden" id="noResults">
+                    <div class="no-results-icon">🔍</div>
+                    <h3>No results found</h3>
+                    <p>Try searching for something else.</p>
+                </div>
+            </section>
+
+            <!-- ══════════════ NOW PLAYING BAR ══════════════ -->
+            <div class="now-playing-bar" id="nowPlayingBar">
+
+                <!-- LEFT: Song Info -->
+                <div class="np-left">
+                    <div class="np-cover" id="npCover">
+                        <img src="img/music.svg" alt="cover" id="npCoverImg">
+                        <div class="np-cover-eq" id="npCoverEq">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="np-info">
+                        <div class="np-title" id="npTitle">Select a song</div>
+                        <div class="np-album" id="npAlbum">—</div>
+                    </div>
+                    <button class="icon-btn like-btn" id="likeBtn" title="Like (L)">
+                        <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+                            <path class="heart-path"
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                                stroke="currentColor" stroke-width="1.5" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- CENTER: Controls + Seekbar -->
+                <div class="np-center">
+                    <div class="controls">
+                        <button class="icon-btn ctrl-btn shuffle-btn" id="shuffleBtn" title="Shuffle (S)">
+                            <svg viewBox="0 0 24 24" fill="none" width="17" height="17">
+                                <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" stroke="currentColor"
+                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                        <button class="icon-btn ctrl-btn" id="prevBtn" title="Previous (Shift+←)">
+                            <img src="img/prevsong.svg" alt="prev" width="26">
+                        </button>
+                        <button class="play-btn" id="playBtn" title="Play/Pause (Space)">
+                            <img src="img/play.svg" alt="play" id="playIcon" width="20">
+                        </button>
+                        <button class="icon-btn ctrl-btn" id="nextBtn" title="Next (Shift+→)">
+                            <img src="img/nextsong.svg" alt="next" width="26">
+                        </button>
+                        <button class="icon-btn ctrl-btn repeat-btn" id="repeatBtn" title="Repeat (R)">
+                            <svg class="repeat-icon" viewBox="0 0 24 24" fill="none" width="17" height="17">
+                                <path d="M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="progress-area">
+                        <span class="time-label" id="currentTime">0:00</span>
+                        <div class="progress-track" id="progressTrack">
+                            <div class="progress-fill" id="progressFill"></div>
+                            <div class="progress-thumb" id="progressThumb"></div>
+                            <div class="progress-hover-time" id="hoverTime">0:00</div>
+                        </div>
+                        <span class="time-label" id="totalTime">0:00</span>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Volume + Extra -->
+                <div class="np-right">
+                    <button class="icon-btn vol-icon-btn" id="volBtn" title="Mute (M)">
+                        <img src="img/volume.svg" alt="volume" id="volIcon" width="18">
+                    </button>
+                    <div class="volume-wrap">
+                        <div class="vol-track">
+                            <div class="vol-fill" id="volFill"></div>
+                            <input type="range" id="volumeSlider" min="0" max="100" value="70" title="Volume (↑↓)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Keyboard shortcut hint modal -->
+    <div class="shortcut-modal hidden" id="shortcutModal">
+        <div class="shortcut-content">
+            <h3>⌨️ Keyboard Shortcuts</h3>
+            <div class="shortcut-grid">
+                <span>Space</span><span>Play / Pause</span>
+                <span>← / →</span><span>Seek ±5 sec</span>
+                <span>Shift + ← / →</span><span>Prev / Next song</span>
+                <span>↑ / ↓</span><span>Volume up / down</span>
+                <span>M</span><span>Mute / Unmute</span>
+                <span>S</span><span>Toggle Shuffle</span>
+                <span>R</span><span>Cycle Repeat</span>
+                <span>L</span><span>Like / Unlike</span>
+                <span>?</span><span>Show this help</span>
+            </div>
+            <button class="shortcut-close" id="shortcutClose">Got it!</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

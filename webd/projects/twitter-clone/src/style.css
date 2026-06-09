@@ -1,0 +1,28 @@
+/*
+ * Main Stylesheet for X (Twitter) Clone
+ * ======================================
+ * Tailwind CSS v4 — just import tailwindcss and it auto-detects
+ * all classes used in HTML/JS files. No @tailwind directives needed.
+ */
+
+/* Import Tailwind CSS v4 */
+@import "tailwindcss";
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+ * Hide scrollbar while keeping scroll functionality.
+ * Used on the right sidebar — it's sticky + h-screen + overflow-y-auto
+ * so it can scroll internally if content is taller than the viewport,
+ * but the scrollbar is hidden for a clean, Twitter-like look.
+ */
+.scrollbar-hide {
+  -ms-overflow-style: none;     /* IE and Edge */
+  scrollbar-width: none;        /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;                /* Chrome, Safari, Opera */
+}
