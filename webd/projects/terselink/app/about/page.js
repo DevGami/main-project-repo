@@ -94,7 +94,7 @@ export default function AboutPage() {
               <div className="bg-gradient-to-br from-slate-50 to-purple-50/50 border border-purple-100/50 rounded-2xl p-8 shadow-inner">
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Dev Gami</h3>
                 <p className="text-slate-600 mb-8 text-base">
-                  Passionate full-stack developer dedicated to building visually stunning, high-performance web applications. Let's connect!
+                  Passionate full-stack developer dedicated to building visually stunning, high-performance web applications. Let&apos;s connect!
                 </p>
                 
                 <div className="flex flex-col gap-4">
