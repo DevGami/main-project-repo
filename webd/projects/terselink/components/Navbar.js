@@ -17,7 +17,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   
-  const githubUrl = process.env.NEXT_PUBLIC_GITHUB_PROFILE_URL || 'https://github.com'
+  const githubUrl = process.env.NEXT_PUBLIC_GITHUB_PROFILE_URL || 'https://github.com/DevGami/main-project-repo/tree/main/webd/projects/terselink'
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
