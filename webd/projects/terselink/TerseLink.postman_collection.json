@@ -1,0 +1,67 @@
+{
+  "info": {
+    "_postman_id": "2f5d249a-7600-45b0-91e4-972d09030847",
+    "name": "TerseLink",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Create automatic short link",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"https://example.com/a/long/path\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/generate",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "generate"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create custom short link",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"https://example.com/a/long/path\",\n  \"shorturl\": \"example-link\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/generate",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "generate"
+          ]
+        }
+      }
+    }
+  ]
+}
