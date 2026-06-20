@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redis Leaderboard — Live Dashboard</title>
+  <meta name="description" content="A live Redis-powered leaderboard dashboard built with Express and ioredis." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Background Blobs -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+
+  <!-- ── Header ── -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <div>
+          <span class="logo-title">Redis Leaderboard</span>
+          <span class="logo-sub">Live · Sorted Sets · ioredis</span>
+        </div>
+      </div>
+      <div class="redis-badge">
+        <span class="redis-dot" id="redisDot"></span>
+        <span id="redisStatus">Connecting…</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- ── Stats Row ── -->
+    <section class="stats-row" id="statsRow">
+      <div class="stat-card">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-info">
+          <div class="stat-value" id="totalPlayers">—</div>
+          <div class="stat-label">Players on Board</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🥇</div>
+        <div class="stat-info">
+          <div class="stat-value" id="topPlayer">—</div>
+          <div class="stat-label">Current Leader</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💎</div>
+        <div class="stat-info">
+          <div class="stat-value" id="topScore">—</div>
+          <div class="stat-label">Highest Score</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📡</div>
+        <div class="stat-info">
+          <div class="stat-value" id="lastUpdated">—</div>
+          <div class="stat-label">Last Refreshed</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid">
+
+      <!-- ── Left: Controls ── -->
+      <aside class="controls-panel">
+
+        <!-- Add Score -->
+        <div class="card" id="addScoreCard">
+          <div class="card-header">
+            <span class="card-icon">🎯</span>
+            <div>
+              <h2 class="card-title">Add Score</h2>
+              <p class="card-desc">ZINCRBY game_leaderboard</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="scoreUserId">User ID</label>
+            <input type="text" id="scoreUserId" placeholder="e.g. player_42" />
+          </div>
+          <div class="form-group">
+            <label for="scorePoints">Points to Add</label>
+            <input type="number" id="scorePoints" placeholder="e.g. 100" value="50" />
+          </div>
+          <button class="btn btn-primary" id="addScoreBtn" onclick="addScore()">
+            <span>Add Points</span>
+            <span class="btn-arrow">→</span>
+          </button>
+          <div class="response-box" id="addScoreResponse"></div>
+        </div>
+
+        <!-- View Post -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">👁️</span>
+            <div>
+              <h2 class="card-title">Increment Post View</h2>
+              <p class="card-desc">INCR post:{id}:views</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="postId">Post ID</label>
+            <input type="text" id="postId" placeholder="e.g. post_7" />
+          </div>
+          <button class="btn btn-secondary" onclick="incrementView()">
+            <span>Increment View</span>
+            <span class="btn-arrow">→</span>
+          </button>
+          <div class="response-box" id="viewResponse"></div>
+        </div>
+
+        <!-- Rank Lookup -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">🔍</span>
+            <div>
+              <h2 class="card-title">Look Up Rank</h2>
+              <p class="card-desc">ZREVRANK game_leaderboard</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="rankUserId">User ID</label>
+            <input type="text" id="rankUserId" placeholder="e.g. player_42" />
+          </div>
+          <button class="btn btn-accent" onclick="lookupRank()">
+            <span>Get Rank</span>
+            <span class="btn-arrow">→</span>
+          </button>
+          <div class="response-box" id="rankResponse"></div>
+        </div>
+
+        <!-- Reset -->
+        <div class="card card-danger">
+          <div class="card-header">
+            <span class="card-icon">🗑️</span>
+            <div>
+              <h2 class="card-title">Reset Leaderboard</h2>
+              <p class="card-desc">DEL game_leaderboard</p>
+            </div>
+          </div>
+          <button class="btn btn-danger" id="resetBtn" onclick="resetLeaderboard()">
+            <span>Clear All Data</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+
+      </aside>
+
+      <!-- ── Right: Leaderboard ── -->
+      <section class="leaderboard-panel">
+        <div class="lb-header">
+          <div>
+            <h2 class="lb-title">🏆 Top 10 Leaderboard</h2>
+            <p class="lb-desc">ZREVRANGE game_leaderboard 0 9 WITHSCORES</p>
+          </div>
+          <button class="btn btn-refresh" onclick="fetchLeaderboard()">
+            <span id="refreshIcon">↻</span> Refresh
+          </button>
+        </div>
+
+        <div class="lb-list" id="leaderboardList">
+          <div class="lb-empty">
+            <div class="lb-empty-icon">📭</div>
+            <p>No players yet.</p>
+            <p class="lb-empty-sub">Add some scores using the panel on the left!</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ── Redis Command Log ── -->
+    <section class="log-section">
+      <div class="log-header">
+        <h3 class="log-title">⌨️ Redis Command Log</h3>
+        <button class="btn-clear" onclick="clearLog()">Clear</button>
+      </div>
+      <div class="log-body" id="commandLog">
+        <div class="log-entry log-info">Waiting for commands…</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Built to learn Redis · Express + ioredis + Sorted Sets</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
