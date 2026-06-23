@@ -1,0 +1,27 @@
+# Core
+fastapi
+uvicorn[standard]
+python-multipart
+python-dotenv
+
+# LangChain ecosystem
+langchain
+langchain-core
+langchain-community
+langchain-groq
+langchain-text-splitters
+
+# Vector store & retrieval
+faiss-cpu
+rank_bm25
+numpy
+
+# Embeddings
+sentence-transformers
+
+# Document loaders
+pypdf
+python-docx
+
+# HTTP / utils
+httpx
